@@ -1,11 +1,17 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := libtest
-LOCAL_C_INCLUDES := $(LOCAL_PATH)
-LOCAL_SRC_FILES := nativeHeader.cpp
+LOCAL_MODULE := libLProbe
+LOCAL_C_INCLUDES := $(LOCAL_PATH) \
+					$(NDK14)/sources/cxx-stl/stlport/stlport
+LOCAL_SRC_FILES := nativeFunc.cpp \
+					CThread.cpp \
+					CSocket.cpp
+					
+#LOCAL_STATIC_LIBRARIES := $(NDK14)/sources/cxx-stl/stlport/libs/armeabi/libstlport_static.a
+					
 LOCAL_CFLAGS := -static
-LOCAL_LDLIBS := -dl 
+#LOCAL_LDLIBS := -dl 
 LOCAL_LDFLAGS := -L. -lc -lstdc++ -llog
 
 include $(BUILD_SHARED_LIBRARY)

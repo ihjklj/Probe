@@ -2,15 +2,26 @@
 #ifndef __NATIVE_UTIL_H__
 #define __NATIVE_UTIL_H__
 
+#include <stdio.h>
 #include <android/log.h>
 #include <pthread.h>
 #include <sys/types.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <net/if.h>
+#include <errno.h>
+#include <jni.h>
 
 #define VER "333"
 #define VERTIME __DATE__"@"__TIME__
+
+#define closesocket(x) { shutdown(x, 2); close(x); (x) = -1; }
+#define Sleep(x) usleep((x) * 1000);
 
 #define LOGD(format, ...) 										\
 		do { 													\
