@@ -7,8 +7,12 @@ package com.ihjklj.probe.androidnative;
 public class NativeMethod {
 
     public native void start();
+    public native void stop();
+    public native void setQosInterval();
+    public native void setValue();
+    public native void sendFrameInfo();
 
     static {
-        System.loadLibrary("test");
+        System.loadLibrary("LProbe");
     }
 }
