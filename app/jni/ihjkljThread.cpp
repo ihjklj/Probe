@@ -1,5 +1,5 @@
 
-#include "CThread.h"
+#include "ihjkljThread.h"
 
 CThread::CThread(JavaVM *vm, PTHREAD_ROUTINE func, void *lParm) {
     mJavaVm = vm;

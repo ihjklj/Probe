@@ -1,6 +1,6 @@
 
-#include "CSocket.h"
-#include "CThread.h"
+#include "ihjkljSocketServer.h"
+#include "ihjkljThread.h"
 #include <asm/ioctls.h>
 #include <fcntl.h>
 #include <sys/stat.h>

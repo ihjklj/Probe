@@ -63,7 +63,15 @@
 					##__VA_ARGS__); 						\
 		} while(0)
 
-
+typedef struct {
+	enum QosCmd cmd;	//命令值
+	size_t len;			//msg长度
+	union {
+		int nValue;
+		int arrValue[5];
+		char szValue[1024];
+	}v;
+} QOSCMD;
 
 
 
