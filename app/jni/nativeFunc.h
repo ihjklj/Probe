@@ -24,4 +24,7 @@ JNIEXPORT void JNICALL NAME(sendFrameInfo)(JNIEnv *env, jobject thiz, jstring js
 }
 #endif
 
+JNIEnv* GetJNIEnv();
+void uploadData(const char* dType, const char* aType, const char* data);
+
 #endif /* __NATIVE_HEADER_H__ */

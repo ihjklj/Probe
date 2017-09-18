@@ -120,7 +120,7 @@ void CSocketCmd::onUploadData(char* pBuffer) {
 	if (sscanf(pBuffer, "%63[^|]|%63[^|]", dType, aType) == 2) {
 		const char* data = pBuffer + (strlen(dType) + strlen(aType) + 2);
 		LOGD("dType:%s,aType:%s\ndata:%s.\n", dType, aType, data);
-		(*m_uploadFunc)(dType, aType,  data);
+		m_uploadFunc(dType, aType,  data);
 	}
 }
 
