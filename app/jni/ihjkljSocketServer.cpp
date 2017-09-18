@@ -9,11 +9,22 @@
 
 //extern void uploadData(const char* dType, const char* aType, const char* data);
 
-CSocketCmd::CSocketCmd(JavaVM *vm) {
+CSocketCmd::CSocketCmd() {
+	m_fdListen = -1;
+	m_nStop = 0;
+	m_hThread = NULL;
+	m_javaVm = NULL;
+	m_host = NULL;
+	m_port = 0;
+}
+
+CSocketCmd::CSocketCmd(JavaVM *vm, const char *host, int port) {
 	m_fdListen = -1;
 	m_nStop = 0;
 	m_hThread = NULL;
 	m_javaVm = vm;
+	m_host = host;
+	m_port = port;
 }
 
 CSocketCmd::~CSocketCmd() {
@@ -33,6 +44,12 @@ CSocketCmd::~CSocketCmd() {
 	}
 
 	LOGD("%s leave.\n", __FUNCTION__);
+}
+
+void CSocketCmd::init(JavaVM *vm, const char *host, int port) {
+	m_javaVm = vm;
+	m_host = host;
+	m_port = port;
 }
 
 void CSocketCmd::start() {
@@ -154,8 +171,8 @@ void CSocketCmd::run(){
 		memset(&RecvAddr, 0, sizeof(RecvAddr));
 
 		RecvAddr.sin_family = AF_INET;
-		RecvAddr.sin_port = htons(13980);
-		RecvAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+		RecvAddr.sin_port = htons(m_port);
+		RecvAddr.sin_addr.s_addr = inet_addr(m_host);
 		
 		//创建用于监听调试方的连接的socket
 		m_fdListen = socket(AF_INET, SOCK_STREAM, 0);

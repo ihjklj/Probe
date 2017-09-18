@@ -13,7 +13,7 @@ public:
     int init(const char *host, int port);
     bool connectTo();
     void closeTo();
-    int sendToServer(QOSCMD msg);
+    int sendToServer(QOSCMD *msg);
 
 protected:
     int     mSocketFd;

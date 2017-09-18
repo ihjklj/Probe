@@ -32,8 +32,11 @@ typedef struct {
 
 class CSocketCmd {
 public:
-	CSocketCmd(JavaVM* vm);
+	CSocketCmd();
+	CSocketCmd(JavaVM* vm, const char *host, int port);
 	virtual ~CSocketCmd();
+
+	void init(JavaVM *vm, const char *host, int port);
 	void run();
 	void start();
 	void stop();
@@ -47,10 +50,12 @@ protected:
 	void onUploadData(char* pBuffer);
 
 protected:
+	int			m_port;
 	int			m_nStop;
 	int			m_fdListen;
 	vector<int>	m_vecSocket;
 	void*		m_hThread;
+	char*		m_host;
 	JavaVM*		m_javaVm;
 };
 

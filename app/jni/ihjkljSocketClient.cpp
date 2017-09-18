@@ -60,7 +60,7 @@ void CSocketClient::closeTo() {
     mIsConnected = false;
 }
 
-int CSocketClient::sendToServer(QOSCMD msg) {
+int CSocketClient::sendToServer(QOSCMD *msg) {
 
     if (!mIsConnected){
         if (!connectTo()){
@@ -68,7 +68,7 @@ int CSocketClient::sendToServer(QOSCMD msg) {
         }
     }
 
-    int ret = send(mSocketFd, (char *)&msg, sizeof(QOSMSG), 0);
+    int ret = send(mSocketFd, (char *)msg, sizeof(QOSMSG), 0);
     if (ret <= 0){
         LOGE("send msg failed!\n");
         closeTo();
