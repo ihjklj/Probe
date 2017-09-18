@@ -87,11 +87,12 @@ int CSocketCmd::connectToServer(const char* ip, int port) {
 
 //调试端关闭了连接
 void CSocketCmd::onCloseManager(int fd) {
-	for (int i=0; i<(int)m_vecSocket.size(); i++){
-		if (m_vecSocket[i] == fd){
-			closesocket(fd);
-			//m_vecSocket.removeAt(i);
-			return;
+	
+	vector<int>::iterator it;
+	for (it = m_vecSocket.begin(); it != m_vecSocket.end(); it++){
+		if (*it == fd){
+			m_vecSocket.erase(it);
+			break;
 		}
 	}
 }
@@ -208,6 +209,7 @@ void CSocketCmd::run(){
 			if (FD_ISSET(m_fdListen, &fdr) > 0){
 				int fd = accept(m_fdListen, NULL, NULL);
 				if (fd != -1){
+					m_vecSocket.push_back(fd);
 					//m_vecSocket.add(fd);
 					LOGD("%s socket:%d.\n", __FUNCTION__, fd);
 				}
