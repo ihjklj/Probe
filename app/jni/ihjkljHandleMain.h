@@ -11,18 +11,25 @@ public:
     CHandleMain(JavaVM *vm);
     ~CHandleMain();
 
+    void init(JavaVM *vm);
     void start();
     void stop();
     void setQosInterval(int duration);
     void sendFrameToQos(const char *frameInfo);
     void setValue(const char *key, const char *value);
+    CSocketServer& getServer() { return mServer; }
+    CSocketClient& getClient() { return mClient; }
 
 protected:
     int praseInfo(const char* szInf, char* spbuf[]);
 
+public:
+    static jclass       mJniClass;
+    static jmethodID    mJniMethodId;
+
 protected:
-    CSoceketServer      mServer;
-    CSoceketClient      mClient;
+    CSocketServer      mServer;
+    CSocketClient      mClient;
     CThread*            mHandleThread;
     JavaVM*             mJavavm;
 };

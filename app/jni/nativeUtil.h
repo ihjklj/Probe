@@ -22,6 +22,10 @@
 
 #define closesocket(x) { shutdown(x, 2); close(x); (x) = -1; }
 #define Sleep(x) usleep((x) * 1000);
+#define CHECKERR(env) {if (env->ExceptionCheck()) {env->ExceptionDescribe();env->ExceptionClear();}}
+
+typedef void (*UPLOAD_FUNC)(const char* , const char* , const char* );
+
 
 #define LOGD(format, ...) 										\
 		do { 													\

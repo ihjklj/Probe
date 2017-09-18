@@ -40,6 +40,7 @@ public:
 	void run();
 	void start();
 	void stop();
+	void setListener(UPLOAD_FUN uploadFunc) { m_uploadFunc = uploadFunc; }
 
 protected:
 	static int runThreadFunc(void* lParam);
@@ -57,6 +58,7 @@ protected:
 	void*		m_hThread;
 	char*		m_host;
 	JavaVM*		m_javaVm;
+	UPLOAD_FUN 	m_uploadFunc;
 };
 
 #endif

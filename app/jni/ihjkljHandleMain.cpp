@@ -1,6 +1,13 @@
 
 #include "ihjkljHandleMain.h"
 
+CHandleMain::CHandleMain() {
+    mJavavm = NULL;
+    mHandleThread = NULL;
+    mServer.init(mv, "127.0.0.1", 13980);
+    mClient.init("127.0.0.1", 13978);
+}
+
 CHandleMain::CHandleMain(JavaVM *vm) {
     mJavavm = vm;
     mHandleThread = NULL;
@@ -10,6 +17,10 @@ CHandleMain::CHandleMain(JavaVM *vm) {
 
 CHandleMain::~CHandleMain() {
     //
+}
+
+void CHandleMain::init(JavaVM *vm){
+    mJavavm = vm;
 }
 
 void CHandleMain::start() {
