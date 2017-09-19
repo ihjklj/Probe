@@ -23,7 +23,7 @@ CSocketServer::CSocketServer(JavaVM *vm, char *host, int port) {
 	m_nStop = 0;
 	m_hThread = NULL;
 	m_javaVm = vm;
-	m_host = host;
+	m_host = strdup(host);
 	m_port = port;
 }
 
@@ -43,6 +43,7 @@ CSocketServer::~CSocketServer() {
 		delete (CThread *)m_hThread;
 	}
 
+	free(m_host);
 	LOGD("%s leave.\n", __FUNCTION__);
 }
 

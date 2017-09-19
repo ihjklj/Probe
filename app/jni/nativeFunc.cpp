@@ -102,7 +102,9 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
         gQosService = (jclass)env->NewGlobalRef(cls);
     }
 
-    gHandle.init(vm, "127.0.0.1", "127.0.0.1", 13980, 13978);
+    char serverHost[128] = {"127.0.0.1"};
+    char clientHost[128] = {"127.0.0.1"};
+    gHandle.init(vm, serverHost, clientHost, 13980, 13978);
     gHandle.getServer().setListener(uploadData);
     LOGD("enter, ver:%s\n", VERTIME);
     return JNI_VERSION_1_4;

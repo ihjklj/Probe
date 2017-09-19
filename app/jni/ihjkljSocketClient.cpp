@@ -12,7 +12,15 @@ CSocketClient::CSocketClient(char *host, int port) {
     mSocketFd = -1;
     mPort = port;
     mIsConnected = false;
-    mHost = host;
+    mHost = strdup(host);
+}
+
+CSocketClient::~CSocketClient(){
+    if (mSocketFd != -1){
+        closeTo();
+    }
+
+	free(mHost);
 }
 
 int CSocketClient::init(char *host, int port) {
