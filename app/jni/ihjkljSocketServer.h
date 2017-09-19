@@ -30,17 +30,17 @@ typedef struct {
 	int	 decoderbuffer;
 } VIDEO_FRAME_INFO;
 
-class CSocketCmd {
+class CSocketServer {
 public:
-	CSocketCmd();
-	CSocketCmd(JavaVM* vm, const char *host, int port);
-	virtual ~CSocketCmd();
+	CSocketServer();
+	CSocketServer(JavaVM* vm, char *host, int port);
+	virtual ~CSocketServer();
 
-	void init(JavaVM *vm, const char *host, int port);
+	void init(JavaVM *vm, char *host, int port);
 	void run();
 	void start();
 	void stop();
-	void setListener(UPLOAD_FUN uploadFunc) { m_uploadFunc = uploadFunc; }
+	void setListener(UPLOAD_FUNC uploadFunc) { m_uploadFunc = uploadFunc; }
 
 protected:
 	static int runThreadFunc(void* lParam);
@@ -51,14 +51,14 @@ protected:
 	void onUploadData(char* pBuffer);
 
 protected:
-	int			m_port;
-	int			m_nStop;
-	int			m_fdListen;
-	vector<int>	m_vecSocket;
-	void*		m_hThread;
-	char*		m_host;
-	JavaVM*		m_javaVm;
-	UPLOAD_FUN 	m_uploadFunc;
+	int				m_port;
+	int				m_nStop;
+	int				m_fdListen;
+	vector<int>		m_vecSocket;
+	void*			m_hThread;
+	char*			m_host;
+	JavaVM*			m_javaVm;
+	UPLOAD_FUNC 	m_uploadFunc;
 };
 
 #endif

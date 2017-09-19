@@ -5,8 +5,10 @@ LOCAL_MODULE := libLProbe
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 					$(NDK14)/sources/cxx-stl/stlport/stlport
 LOCAL_SRC_FILES := nativeFunc.cpp \
-					CThread.cpp \
-					CSocket.cpp
+					ihjkljThread.cpp \
+					ihjkljSocketServer.cpp \
+					ihjkljSocketClient.cpp	\
+					ihjkljHandleMain.cpp
 					
 #LOCAL_STATIC_LIBRARIES := $(NDK14)/sources/cxx-stl/stlport/libs/armeabi/libstlport_static.a
 					

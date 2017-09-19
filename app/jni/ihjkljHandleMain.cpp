@@ -4,23 +4,21 @@
 CHandleMain::CHandleMain() {
     mJavavm = NULL;
     mHandleThread = NULL;
-    mServer.init(mv, "127.0.0.1", 13980);
-    mClient.init("127.0.0.1", 13978);
 }
 
 CHandleMain::CHandleMain(JavaVM *vm) {
     mJavavm = vm;
     mHandleThread = NULL;
-    mServer.init(mv, "127.0.0.1", 13980);
-    mClient.init("127.0.0.1", 13978);
 }
 
 CHandleMain::~CHandleMain() {
     //
 }
 
-void CHandleMain::init(JavaVM *vm){
+void CHandleMain::init(JavaVM *vm, char *serverHost, char *clientHost, int serverPort, int clientPort){
     mJavavm = vm;
+	mServer.init(vm, serverHost, serverPort);
+    mClient.init(clientHost, clientPort);
 }
 
 void CHandleMain::start() {
@@ -69,12 +67,11 @@ int CHandleMain::praseInfo(const char* szInf, char* spbuf[]) {
     return num;
 }
 
-void CHandleMain::sendFrameToQos(const char *frameInfo) {
+void CHandleMain::sendFrameToQos(const char *pframe) {
     int num = -1, i, seat, nouse;
     char* strinf[64] = {0};
-    char* tmp = NULL;
 
-    tmp = strstr(szInf, "frame_info:") + strlen("frame_info:");
+    const char *tmp = strstr(pframe, "frame_info:") + strlen("frame_info:");
     num = praseInfo(tmp, strinf);
 
     VIDEO_FRAME_INFO frameInfo;

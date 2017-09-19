@@ -7,10 +7,10 @@
 class CSocketClient {
 public:
     CSocketClient();
-    CSocketClient(const char *host, int port);
+    CSocketClient(char *host, int port);
     ~CSocketClient();
 
-    int init(const char *host, int port);
+    int init(char *host, int port);
     bool connectTo();
     void closeTo();
     int sendToServer(QOSCMD *msg);

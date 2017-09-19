@@ -8,16 +8,17 @@ CSocketClient::CSocketClient() {
     mHost = NULL;
 }
 
-CSocketClient::CSocketClient(const char *host, int port) {
+CSocketClient::CSocketClient(char *host, int port) {
     mSocketFd = -1;
     mPort = port;
     mIsConnected = false;
     mHost = host;
 }
 
-int CSocketClient::init(const char *host, int port) {
+int CSocketClient::init(char *host, int port) {
     mHost = host;
     mPort = port;
+	return 0;
 }
 
 bool CSocketClient::connectTo() {
@@ -30,7 +31,7 @@ bool CSocketClient::connectTo() {
     struct sockaddr_in clientAddr;
     memset(&clientAddr, 0, sizeof(clientAddr));
     clientAddr.sin_family = AF_INET;
-    clientAddr.sin_addr.s_addr = inet_addr(host);
+    clientAddr.sin_addr.s_addr = inet_addr(mHost);
     clientAddr.sin_port = htons(mPort);
 
     struct timeval tv = {3, 0};
@@ -47,7 +48,7 @@ bool CSocketClient::connectTo() {
         closesocket(socketFd);
         return false;
     }
-    LOGD("socket %d, connect %s\n", socketFd, 0 == nRet ? "success .":"failure !");
+    LOGD("socket %d, connect success.\n", socketFd);
 
     mSocketFd = socketFd;
     mIsConnected = true;
@@ -68,7 +69,7 @@ int CSocketClient::sendToServer(QOSCMD *msg) {
         }
     }
 
-    int ret = send(mSocketFd, (char *)msg, sizeof(QOSMSG), 0);
+    int ret = send(mSocketFd, (char *)msg, sizeof(QOSCMD), 0);
     if (ret <= 0){
         LOGE("send msg failed!\n");
         closeTo();

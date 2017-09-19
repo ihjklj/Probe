@@ -3,15 +3,17 @@
 #define __IHJKLJ_HANDLE_H__
 
 #include "nativeUtil.h"
+#include "ihjkljThread.h"
 #include "ihjkljSocketClient.h"
 #include "ihjkljSocketServer.h"
 
 class CHandleMain {
 public:
+	CHandleMain();
     CHandleMain(JavaVM *vm);
     ~CHandleMain();
 
-    void init(JavaVM *vm);
+    void init(JavaVM *vm, char *serverHost, char *clientHost, int serverPort, int clientPort);
     void start();
     void stop();
     void setQosInterval(int duration);

@@ -1,8 +1,11 @@
 
 #include "nativeFunc.h"
+#include "ihjkljHandleMain.h"
 
 JavaVM *gJvm = NULL;
 CHandleMain gHandle;
+jmethodID gOnDataUpload = NULL;
+jclass gQosService = NULL;
 
 JNIEXPORT void JNICALL NAME(start)(JNIEnv *env, jobject object){
     LOGD("---->");
@@ -54,9 +57,9 @@ JNIEXPORT void JNICALL NAME(sendFrameInfo)(JNIEnv *env, jobject thiz, jstring js
 
 JNIEnv* GetJNIEnv() {
     JNIEnv* env = NULL;
-    jvm->GetEnv((void **)&env, JNI_VERSION_1_4);
+    gJvm->GetEnv((void **)&env, JNI_VERSION_1_4);
     if (env == NULL){
-        jvm->AttachCurrentThread(&env, NULL);
+        gJvm->AttachCurrentThread(&env, NULL);
     }
     return env;
 }
@@ -64,7 +67,7 @@ JNIEnv* GetJNIEnv() {
 void uploadData(const char* dType, const char* aType, const char* data) {
     if (dType == NULL || aType == NULL || data == NULL)
         return;
-    if (clsQosService == NULL || midOnDataUpload == NULL){
+    if (gQosService == NULL || gOnDataUpload == NULL){
         return;
     }
     JNIEnv* env = GetJNIEnv();
@@ -74,7 +77,7 @@ void uploadData(const char* dType, const char* aType, const char* data) {
     jstring strDType = env->NewStringUTF(dType);
     jstring strAType = env->NewStringUTF(aType);
     jstring strData = env->NewStringUTF(data);
-    env->CallStaticVoidMethod(clsQosService, midOnDataUpload, strDType, strAType, strData);
+    env->CallStaticVoidMethod(gQosService, gOnDataUpload, strDType, strAType, strData);
     CHECKERR(env);
     env->DeleteLocalRef(strDType);
     env->DeleteLocalRef(strAType);
@@ -94,12 +97,12 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
     jclass cls = env->FindClass("com/ihjklj/probe/androidnative/NativeMethod");
     CHECKERR(env);
     if (cls != NULL){
-        midOnDataUpload = env->GetStaticMethodID(cls, "onDataUpload", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+        gOnDataUpload = env->GetStaticMethodID(cls, "onDataUpload", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
         CHECKERR(env);
-        clsQosService = (jclass)env->NewGlobalRef(cls);
+        gQosService = (jclass)env->NewGlobalRef(cls);
     }
 
-    gHandle.init(vm);
+    gHandle.init(vm, "127.0.0.1", "127.0.0.1", 13980, 13978);
     gHandle.getServer().setListener(uploadData);
     LOGD("enter, ver:%s\n", VERTIME);
     return JNI_VERSION_1_4;

@@ -9,7 +9,7 @@
 
 //extern void uploadData(const char* dType, const char* aType, const char* data);
 
-CSocketCmd::CSocketCmd() {
+CSocketServer::CSocketServer() {
 	m_fdListen = -1;
 	m_nStop = 0;
 	m_hThread = NULL;
@@ -18,7 +18,7 @@ CSocketCmd::CSocketCmd() {
 	m_port = 0;
 }
 
-CSocketCmd::CSocketCmd(JavaVM *vm, const char *host, int port) {
+CSocketServer::CSocketServer(JavaVM *vm, char *host, int port) {
 	m_fdListen = -1;
 	m_nStop = 0;
 	m_hThread = NULL;
@@ -27,7 +27,7 @@ CSocketCmd::CSocketCmd(JavaVM *vm, const char *host, int port) {
 	m_port = port;
 }
 
-CSocketCmd::~CSocketCmd() {
+CSocketServer::~CSocketServer() {
 	m_nStop = 1;
 	
 	if (m_fdListen != -1){
@@ -46,13 +46,13 @@ CSocketCmd::~CSocketCmd() {
 	LOGD("%s leave.\n", __FUNCTION__);
 }
 
-void CSocketCmd::init(JavaVM *vm, const char *host, int port) {
+void CSocketServer::init(JavaVM *vm, char *host, int port) {
 	m_javaVm = vm;
 	m_host = host;
 	m_port = port;
 }
 
-void CSocketCmd::start() {
+void CSocketServer::start() {
 	LOGD("Start.\n");
 	if (m_hThread == NULL) {
 		m_hThread = new CThread(m_javaVm, runThreadFunc, this);
@@ -62,7 +62,7 @@ void CSocketCmd::start() {
 	//property_set("ctl.start", "IptvQosServ");
 }
 
-void CSocketCmd::stop() {
+void CSocketServer::stop() {
 	LOGD("Stop\n");
 	
 	/* 退出qos */
@@ -70,7 +70,7 @@ void CSocketCmd::stop() {
 }
 
 
-int CSocketCmd::connectToServer(const char* ip, int port) {
+int CSocketServer::connectToServer(const char* ip, int port) {
 	
     int socketFd = socket(PF_INET, SOCK_STREAM, 0);
 	if (socketFd == -1){
@@ -103,7 +103,7 @@ int CSocketCmd::connectToServer(const char* ip, int port) {
 }
 
 //调试端关闭了连接
-void CSocketCmd::onCloseManager(int fd) {
+void CSocketServer::onCloseManager(int fd) {
 	
 	vector<int>::iterator it;
 	for (it = m_vecSocket.begin(); it != m_vecSocket.end(); it++){
@@ -114,7 +114,7 @@ void CSocketCmd::onCloseManager(int fd) {
 	}
 }
 
-void CSocketCmd::onUploadData(char* pBuffer) {
+void CSocketServer::onUploadData(char* pBuffer) {
 	char dType[64] = {0};
 	char aType[64] = {0};
 	if (sscanf(pBuffer, "%63[^|]|%63[^|]", dType, aType) == 2) {
@@ -124,7 +124,7 @@ void CSocketCmd::onUploadData(char* pBuffer) {
 	}
 }
 
-int CSocketCmd::recvData(char* pBuffer, int fd, int len) {
+int CSocketServer::recvData(char* pBuffer, int fd, int len) {
 	int nCnt = 0;
 	while (nCnt < len){
 		int nRet = recv(fd, pBuffer+nCnt, len-nCnt, 0);
@@ -135,7 +135,7 @@ int CSocketCmd::recvData(char* pBuffer, int fd, int len) {
 }
 
 //接收管理端发来的数据
-void CSocketCmd::onCmdManager(int fd) {
+void CSocketServer::onCmdManager(int fd) {
 	DATAMSG qos;
 	int nRet = recv(fd, (char*)&qos, sizeof(DATAMSG), 0);
 	//服务端关闭了连接
@@ -162,7 +162,7 @@ void CSocketCmd::onCmdManager(int fd) {
 	free(pBuffer);
 }
 
-void CSocketCmd::run(){
+void CSocketServer::run(){
 	do {
 		struct sockaddr_in RecvAddr;
 		int nLen = sizeof(RecvAddr);
@@ -245,7 +245,7 @@ void CSocketCmd::run(){
 	LOGD("%s leave.\n", __FUNCTION__);
 }
 
-int CSocketCmd::runThreadFunc(void* lParam) {
-	((CSocketCmd*)lParam)->run();
+int CSocketServer::runThreadFunc(void* lParam) {
+	((CSocketServer*)lParam)->run();
 	return 1;
 }
