@@ -23,11 +23,12 @@ JNIEXPORT void JNICALL NAME(setQosInterval)(JNIEnv *env, jobject thiz, jint nDur
 }
 
 JNIEXPORT void JNICALL NAME(setValue)(JNIEnv *env, jobject thiz, jstring jstrKey, jstring jstrValue){
-    LOGD("---->");
-
     if (jstrKey == NULL || jstrValue == NULL){
+        LOGE("jstrKey or jstrValue is NULL!");
         return ;
     }
+    LOGD("");
+
     const char *key = env->GetStringUTFChars(jstrKey, NULL);
     const char *value = env->GetStringUTFChars(jstrValue, NULL);
     if (key != NULL && value != NULL){
@@ -43,8 +44,8 @@ JNIEXPORT void JNICALL NAME(setValue)(JNIEnv *env, jobject thiz, jstring jstrKey
 }
 
 JNIEXPORT void JNICALL NAME(sendFrameInfo)(JNIEnv *env, jobject thiz, jstring jstrInf){
-    LOGD("---->");
     if (jstrInf == NULL){
+        LOGE("jstrInf is NULL!");
         return ;
     }
 
@@ -65,6 +66,7 @@ JNIEnv* GetJNIEnv() {
 }
 
 void uploadData(const char* dType, const char* aType, const char* data) {
+    LOGD("dType:%s, aType:%s, data:%s.", aType, aType, data);
     if (dType == NULL || aType == NULL || data == NULL)
         return;
     if (gQosService == NULL || gOnDataUpload == NULL){
@@ -85,13 +87,13 @@ void uploadData(const char* dType, const char* aType, const char* data) {
 }
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
+    LOGD("enter, ver:%s", VERTIME);
     gJvm = vm;
-
     JNIEnv* env = NULL;
     jint result = -1;
 
     if (vm->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK) {
-        LOGE("GetEnv failed!\n");
+        LOGE("GetEnv failed!");
         return -1;
     }
     jclass cls = env->FindClass("com/ihjklj/probe/androidnative/NativeMethod");
@@ -106,6 +108,6 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
     char clientHost[128] = {"127.0.0.1"};
     gHandle.init(vm, serverHost, clientHost, 13980, 13978);
     gHandle.getServer().setListener(uploadData);
-    LOGD("enter, ver:%s\n", VERTIME);
+
     return JNI_VERSION_1_4;
 }

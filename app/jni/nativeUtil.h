@@ -30,7 +30,7 @@ typedef void (*UPLOAD_FUNC)(const char* , const char* , const char* );
 #define LOGD(format, ...) 										\
 		do { 													\
 			__android_log_print(ANDROID_LOG_DEBUG, "QosSo", 	\
-					"%s|%5d|%s| "format, 						\
+					"%s|%5d|%s| "format"\n", 					\
 					VER, 										\
 					gettid(), 									\
 					__FUNCTION__, 								\
@@ -40,7 +40,7 @@ typedef void (*UPLOAD_FUNC)(const char* , const char* , const char* );
 #define LOGV(format, ...) 										\
 		do { 													\
 			__android_log_print(ANDROID_LOG_VERBOSE, "QosSo", 	\
-					"%s|%5d|%s| "format, 						\
+					"%s|%5d|%s| "format"\n", 					\
 					VER, 										\
 					gettid(), 									\
 					__FUNCTION__, 								\
@@ -50,7 +50,7 @@ typedef void (*UPLOAD_FUNC)(const char* , const char* , const char* );
 #define LOGE(format, ...) 									\
 		do { 												\
 			__android_log_print(ANDROID_LOG_ERROR, "Qos", 	\
-					"%s|%5d|%s| "format, 					\
+					"%s|%5d|%s| "format"\n", 				\
 					VER, 									\
 					gettid(), 								\
 					__FUNCTION__, 							\
@@ -59,8 +59,8 @@ typedef void (*UPLOAD_FUNC)(const char* , const char* , const char* );
 
 #define LOGW(format, ...) 									\
 		do { 												\
-			__android_log_print(ANDROID_LOG_WARN, "QosSo", 	\
-					"%s|%5d|%s| "format, 					\
+			__android_log_print(ANDROID_LOG_WARN, "QosSo", \
+					"%s|%5d|%s| "format"\n", 				\
 					VER, 									\
 					gettid(), 								\
 					__FUNCTION__, 							\
