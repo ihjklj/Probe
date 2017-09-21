@@ -20,6 +20,7 @@ JNIEXPORT void JNICALL NAME(stop)(JNIEnv *env, jobject thiz){
 
 JNIEXPORT void JNICALL NAME(setQosInterval)(JNIEnv *env, jobject thiz, jint nDura){
     LOGD("---->");
+    gHandle.setQosInterval(nDura);
 }
 
 JNIEXPORT void JNICALL NAME(setValue)(JNIEnv *env, jobject thiz, jstring jstrKey, jstring jstrValue){
@@ -27,7 +28,6 @@ JNIEXPORT void JNICALL NAME(setValue)(JNIEnv *env, jobject thiz, jstring jstrKey
         LOGE("jstrKey or jstrValue is NULL!");
         return ;
     }
-    LOGD("");
 
     const char *key = env->GetStringUTFChars(jstrKey, NULL);
     const char *value = env->GetStringUTFChars(jstrValue, NULL);
