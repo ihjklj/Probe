@@ -104,7 +104,7 @@ void CHandleMain::sendFrameToQos(const char *pframe) {
 }
 
 void CHandleMain::setQosInterval(int duration) {
-    DPrint("duration:%d.", duration);
+    LOGD("duration:%d.", duration);
     QOSCMD cmd;
     cmd.cmd = SetQOSInterval;
     cmd.v.nValue = duration;
