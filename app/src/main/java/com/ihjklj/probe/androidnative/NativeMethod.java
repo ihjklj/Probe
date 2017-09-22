@@ -12,6 +12,10 @@ public class NativeMethod {
     public native void setValue();
     public native void sendFrameInfo();
 
+    public static void onDataUpload(String aType, String dType, String data) {
+        return ;
+    }
+
     static {
         System.loadLibrary("LProbe");
     }
