@@ -1,5 +1,5 @@
 
-#include "ihjkljSocketClient.h"
+#include "ikSocketClient.h"
 
 CSocketClient::CSocketClient() {
     mSocketFd = -1;

@@ -2,7 +2,7 @@
 #ifndef __C_SOCKET_CLIENT_H__
 #define __C_SOCKET_CLIENT_H__
 
-#include "nativeUtil.h"
+#include "ikUtil.h"
 
 class CSocketClient {
 public:

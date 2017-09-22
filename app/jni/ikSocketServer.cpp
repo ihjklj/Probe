@@ -1,11 +1,11 @@
 
-#include "ihjkljSocketServer.h"
-#include "ihjkljThread.h"
+#include "ikSocketServer.h"
+#include "ikThread.h"
 #include <asm/ioctls.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/system_properties.h>
-#include "nativeUtil.h"
+#include "ikUtil.h"
 
 //extern void uploadData(const char* dType, const char* aType, const char* data);
 

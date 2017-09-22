@@ -3,7 +3,7 @@
 #define __C_THREAD_H__
 
 #include <jni.h>
-#include "nativeUtil.h"
+#include "ikUtil.h"
 
 typedef  int (*PTHREAD_ROUTINE)(void* lParam);
 

@@ -1,6 +1,6 @@
 
-#include "nativeFunc.h"
-#include "ihjkljHandleMain.h"
+#include "ikNativeFunc.h"
+#include "ikHandleMain.h"
 
 JavaVM *gJvm = NULL;
 CHandleMain gHandle;

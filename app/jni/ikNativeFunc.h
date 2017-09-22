@@ -2,7 +2,7 @@
 #ifndef __NATIVE_HEADER_H__
 #define __NATIVE_HEADER_H__
 
-#include "nativeUtil.h"
+#include "ikUtil.h"
 
 #define CLASS Java_com_ihjklj_probe_androidnative_NativeMethod_
 

@@ -2,10 +2,10 @@
 #ifndef __IHJKLJ_HANDLE_H__
 #define __IHJKLJ_HANDLE_H__
 
-#include "nativeUtil.h"
-#include "ihjkljThread.h"
-#include "ihjkljSocketClient.h"
-#include "ihjkljSocketServer.h"
+#include "ikUtil.h"
+#include "ikThread.h"
+#include "ikSocketClient.h"
+#include "ikSocketServer.h"
 
 class CHandleMain {
 public:

@@ -1,5 +1,5 @@
 
-#include "ihjkljHandleMain.h"
+#include "ikHandleMain.h"
 
 CHandleMain::CHandleMain() {
     mJavavm = NULL;

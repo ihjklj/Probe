@@ -2,7 +2,7 @@
 #ifndef __SOCKET_CMD__H__
 #define __SOCKET_CMD__H__
 
-#include "nativeUtil.h"
+#include "ikUtil.h"
 #include <vector>
 
 //using namespace android;
