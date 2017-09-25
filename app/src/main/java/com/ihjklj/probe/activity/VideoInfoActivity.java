@@ -26,7 +26,7 @@ public class VideoInfoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.videoinfo);
-        LOG.d("2 onCreate");
+        LOG.d("2 onCreate.");
 
         init();
         show();
