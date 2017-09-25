@@ -33,7 +33,7 @@ public class VideoInfoActivity extends Activity {
     }
 
     private void init(){
-        LOG.d("init");
+        LOG.d("init.");
         mNativeMethod = new NativeMethod();
         mNativeMethod.start();
 
